@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>e_Touring | Plans</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .filter-buttons { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+        .filter-btn { padding: 0.5rem 1.5rem; border: 2px solid var(--primary); background: transparent; color: var(--primary); border-radius: 30px; cursor: pointer; }
+        .filter-btn:hover, .filter-btn.active { background: var(--primary); color: white; }
+        .plan-card { background: white; border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); transition: all 0.3s; height: 100%; }
+        .plan-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .plan-icon { background: var(--primary-bg); padding: 1.5rem; text-align: center; }
+        .plan-icon i { font-size: 2.5rem; color: var(--primary); }
+        .plan-content { padding: 1.5rem; }
+        .plan-features { list-style: none; margin: 1rem 0; }
+        .plan-features li { padding: 0.25rem 0; display: flex; align-items: center; gap: 0.5rem; }
+        .plan-features i { color: var(--primary); }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><img src="images/logo.png"><span>e_Touring</span></div>
+            <div class="menu-btn">☰</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a><a href="about.html">About</a>
+                <a href="events_page.html">Events</a><a href="plans_pages.html" class="active">Plans</a>
+                <a href="contact_us_page.html">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" style="height: 40vh; min-height: 300px;">
+            <img src="https://images.unsplash.com/photo-1532339142462-fd0a1e6e4f0f" alt="Plans">
+            <div class="hero-content"><h1>Adventure Plans</h1><p>Choose your perfect experience</p></div>
+        </section>
+
+        <section class="section">
+            <div class="filter-buttons" id="filterButtons">
+                <button class="filter-btn active" data-category="all">All</button>
+                <button class="filter-btn" data-category="Hiking">🥾 Hiking</button>
+                <button class="filter-btn" data-category="Road trip">🚗 Road Trip</button>
+                <button class="filter-btn" data-category="Religious Tour">⛪ Religious</button>
+                <button class="filter-btn" data-category="Sightseeing">🏛️ Sightseeing</button>
+                <button class="filter-btn" data-category="Adventure">🧗 Adventure</button>
+                <button class="filter-btn" data-category="Cultural">🎭 Cultural</button>
+            </div>
+            <div class="grid-3" id="plansGrid"></div>
+        </section>
+    </main>
+
+    <footer>...</footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="config.js"></script>
+    <script>
+        let allPlans = [];
+        function bookViaWhatsApp(planName) { window.open(`https://wa.me/96170263067?text=${encodeURIComponent('Hello! Interested in: ' + planName)}`, '_blank'); }
+        
+        async function loadPlans() {
+            const res = await fetch(`${window.API_BASE_URL}/api/plans`);
+            allPlans = await res.json();
+            renderPlans('all');
+        }
+        
+        function renderPlans(category) {
+            let filtered = category === 'all' ? allPlans : allPlans.filter(p => p.category === category);
+            const container = document.getElementById('plansGrid');
+            if (filtered.length === 0) { container.innerHTML = '<p class="text-center">No plans found</p>'; return; }
+            container.innerHTML = filtered.map(plan => `
+                <div class="plan-card">
+                    <div class="plan-icon"><i class="fas ${getIcon(plan.category)}"></i></div>
+                    <div class="plan-content">
+                        <h3>${escapeHtml(plan.name)}</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> ${plan.location || 'Lebanon'}</p>
+                        <p><i class="fas fa-clock"></i> ${plan.duration || 'Flexible'}</p>
+                        <ul class="plan-features">${plan.features?.slice(0, 3).map(f => `<li><i class="fas fa-check-circle"></i> ${escapeHtml(f)}</li>`).join('') || ''}</ul>
+                        <button class="btn" onclick="bookViaWhatsApp('${escapeHtml(plan.name)}')"><i class="fab fa-whatsapp"></i> Inquire</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function getIcon(cat) {
+            const icons = { 'Hiking':'fa-hiking', 'Road trip':'fa-car', 'Religious Tour':'fa-church', 'Sightseeing':'fa-landmark', 'Adventure':'fa-mountain', 'Cultural':'fa-mask' };
+            return icons[cat] || 'fa-tree';
+        }
+        
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+        
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                renderPlans(this.dataset.category);
+            });
+        });
+        
+        loadPlans();
+    </script>
+</body>
+</html>
