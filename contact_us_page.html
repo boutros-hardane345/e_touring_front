@@ -1,25 +1,77 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>e_Touring | Contact</title>
     <link rel="icon" type="image/png" href="images/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .contact-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 3rem 0; }
-        .contact-card { background: white; padding: 2rem; border-radius: 12px; text-align: center; box-shadow: var(--shadow); }
-        .contact-icon { width: 70px; height: 70px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; font-size: 1.5rem; }
-        .feedback-section { background: var(--primary-bg); border-radius: 20px; padding: 2rem; margin: 2rem 0; }
-        .rating-input { display: flex; gap: 0.5rem; flex-direction: row-reverse; justify-content: flex-end; }
-        .rating-input input { display: none; }
-        .rating-input label { font-size: 1.5rem; color: #ddd; cursor: pointer; }
-        .rating-input label:hover, .rating-input label:hover ~ label, .rating-input input:checked ~ label { color: #ffc107; }
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .contact-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .feedback-section {
+            background: var(--primary-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .rating-input {
+            display: flex;
+            gap: 0.5rem;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .rating-input input {
+            display: none;
+        }
+
+        .rating-input label {
+            font-size: 1.5rem;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+        .rating-input label:hover,
+        .rating-input label:hover~label,
+        .rating-input input:checked~label {
+            color: #ffc107;
+        }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -34,22 +86,46 @@
     </header>
 
     <main>
-        <section class="hero" style="height: 40vh;"><img src="https://images.unsplash.com/photo-1426604966848-d7adac402b3f"><div class="hero-content"><h1>Contact Us</h1><p>We'd love to hear from you</p></div></section>
+        <!-- ✅ Fixed -->
+<section class="hero" style="height: 40vh; min-height: 300px;">
+        <img src="https://images.unsplash.com/photo-1532339142462-fd0a1e6e4f0f">
+            <div class="hero-content">
+                <h1>Contact Us</h1>
+                <p>We'd love to hear from you</p>
+            </div>
+        </section>
 
         <section class="section">
             <div class="contact-info">
-                <div class="contact-card"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><h3>Visit Us</h3><p>Beirut, Lebanon</p></div>
-                <div class="contact-card"><div class="contact-icon"><i class="fas fa-phone"></i></div><h3>Call Us</h3><p><a href="tel:+96170263067">+961 70 263 067</a></p></div>
-                <div class="contact-card"><div class="contact-icon"><i class="fas fa-envelope"></i></div><h3>Email Us</h3><p><a href="mailto:etouringleb@gmail.com">etouringleb@gmail.com</a></p></div>
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h3>Visit Us</h3>
+                    <p>Beirut, Lebanon</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                    <h3>Call Us</h3>
+                    <p><a href="tel:+96170263067">+961 70 263 067</a></p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <h3>Email Us</h3>
+                    <p><a href="mailto:etouringleb@gmail.com">etouringleb@gmail.com</a></p>
+                </div>
             </div>
         </section>
 
         <section class="feedback-section">
-            <div class="section-title"><h2>Share Your Experience</h2><p>We value your feedback</p></div>
+            <div class="section-title">
+                <h2>Share Your Experience</h2>
+                <p>We value your feedback</p>
+            </div>
             <div class="form-container" style="max-width: 700px;">
                 <form id="feedbackForm">
-                    <div class="form-group"><input type="text" id="fbName" placeholder="Your Name *" class="form-control" required></div>
-                    <div class="form-group"><input type="email" id="fbEmail" placeholder="Email *" class="form-control" required></div>
+                    <div class="form-group"><input type="text" id="fbName" placeholder="Your Name *"
+                            class="form-control" required></div>
+                    <div class="form-group"><input type="email" id="fbEmail" placeholder="Email *" class="form-control"
+                            required></div>
                     <div class="form-group">
                         <div class="rating-input">
                             <input type="radio" name="rating" value="5" id="star5"><label for="star5">★</label>
@@ -59,29 +135,38 @@
                             <input type="radio" name="rating" value="1" id="star1"><label for="star1">★</label>
                         </div>
                     </div>
-                    <div class="form-group"><textarea id="fbMessage" rows="4" placeholder="Your Message *" class="form-control" required></textarea></div>
+                    <div class="form-group"><textarea id="fbMessage" rows="4" placeholder="Your Message *"
+                            class="form-control" required></textarea></div>
                     <button type="submit" class="btn">Submit Feedback</button>
                 </form>
                 <div id="feedbackMessage" style="display:none"></div>
             </div>
         </section>
 
-        <section class="section"><div class="section-title"><h2>What Our Visitors Say</h2></div><div id="feedbackList" class="testimonials"></div></section>
+        <section class="section">
+            <div class="section-title">
+                <h2>What Our Visitors Say</h2>
+            </div>
+            <div id="feedbackList" class="testimonials"></div>
+        </section>
     </main>
 
     <footer>
         <div class="footer-content">
-            <div class="footer-section"><h4>e_Touring</h4>
+            <div class="footer-section">
+                <h4>e_Touring</h4>
                 <p><i class="fas fa-envelope"></i> <a href="mailto:etouringleb@gmail.com">etouringleb@gmail.com</a></p>
                 <p><i class="fas fa-phone"></i> <a href="tel:+96170263067">+961 70 263 067</a></p>
                 <p><i class="fas fa-location-dot"></i> Beirut, Lebanon</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/e_touring_?igsh=MXhhd24xaDJueTU4cA=="><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.instagram.com/e_touring_?igsh=MXhhd24xaDJueTU4cA=="><i
+                            class="fab fa-instagram"></i></a>
                     <a href="https://whatsapp.com/channel/0029VbBjT8wEKyZH0PKo1I3C"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
-            <div class="footer-section"><h4>Quick Links</h4>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
                 <ul class="footer-links">
                     <li><a href="about.html"><i class="fas fa-chevron-right"></i> About Us</a></li>
                     <li><a href="events_page.html"><i class="fas fa-chevron-right"></i> Events</a></li>
@@ -90,7 +175,9 @@
                 </ul>
             </div>
         </div>
-        <div class="footer-bottom"><p>© 2026 e_Touring. Made with <i class="fas fa-heart"></i> for Lebanon</p></div>
+        <div class="footer-bottom">
+            <p>© 2026 e_Touring. Made with <i class="fas fa-heart"></i> for Lebanon</p>
+        </div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -100,10 +187,10 @@
             const res = await fetch(`${window.API_BASE_URL}/api/feedback`);
             const list = await res.json();
             document.getElementById('feedbackList').innerHTML = list.map(f => `
-                <div class="testimonial-card"><p>"${escapeHtml(f.message)}"</p><div class="testimonial-author"><div><h4>${escapeHtml(f.name)}</h4><p>${'★'.repeat(f.rating)}${'☆'.repeat(5-f.rating)}</p></div></div></div>
+                <div class="testimonial-card"><p>"${escapeHtml(f.message)}"</p><div class="testimonial-author"><div><h4>${escapeHtml(f.name)}</h4><p>${'★'.repeat(f.rating)}${'☆'.repeat(5 - f.rating)}</p></div></div></div>
             `).join('');
         }
-        
+
         document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const rating = document.querySelector('input[name="rating"]:checked')?.value || 5;
@@ -114,9 +201,10 @@
             if (res.ok) { alert('Thank you! Your feedback will appear after approval.'); document.getElementById('feedbackForm').reset(); loadFeedback(); }
             else alert('Error submitting');
         });
-        
+
         function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
         loadFeedback();
     </script>
 </body>
+
 </html>
