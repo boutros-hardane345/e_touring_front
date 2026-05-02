@@ -209,87 +209,12 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Load events from API
-    loadEventsFromAPI();
-    
-    // Load testimonials from API
-    loadTestimonialsFromAPI();
-    
     // Initialize form validation
     initFormValidation();
     
     // Handle file upload
     initFileUpload();
 });
-
-// ============ LOAD EVENTS FROM API ============
-async function loadEventsFromAPI() {
-    const eventsGrid = document.querySelector('.events-grid');
-    if (!eventsGrid) return;
-
-    try {
-        const response = await fetch('/api/events');
-        const events = await response.json();
-        
-        if (events.length === 0) {
-            eventsGrid.innerHTML = '<p class="text-center">No events available. Check back soon!</p>';
-            return;
-        }
-        
-        eventsGrid.innerHTML = events.map((event, index) => `
-            <div class="card" data-aos="fade-up" data-aos-delay="${(index % 3) * 100}">
-                <img src="${event.image || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470'}" alt="${event.title}" class="card-img" loading="lazy">
-                <div class="card-content">
-                    <h3 class="card-title">${escapeHtml(event.title)}</h3>
-                    <p><i class="fas fa-calendar" style="color: var(--primary);"></i> ${event.date || 'Date TBA'}</p>
-                    <p><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> ${event.location || 'Lebanon'}</p>
-                    <p><i class="fas fa-tag" style="color: var(--primary);"></i> ${event.price || 'Free'}</p>
-                    <p class="mt-2">${escapeHtml(event.description || '')}</p>
-                    <button class="btn mt-3" onclick="registerForEvent('${escapeHtml(event.title)}')">Register Now</button>
-                </div>
-            </div>
-        `).join('');
-        
-        // Refresh AOS animations for new elements
-        AOS.refresh();
-    } catch (error) {
-        console.error('Error loading events:', error);
-        eventsGrid.innerHTML = '<p class="text-center">Unable to load events. Please try again later.</p>';
-    }
-}
-
-// ============ LOAD TESTIMONIALS FROM API ============
-async function loadTestimonialsFromAPI() {
-    const testimonialsContainer = document.querySelector('.testimonials');
-    if (!testimonialsContainer) return;
-
-    try {
-        const response = await fetch('/api/feedback');
-        const feedbacks = await response.json();
-        
-        if (feedbacks.length === 0) {
-            testimonialsContainer.innerHTML = '<p class="text-center">No testimonials yet. Be the first to share your experience!</p>';
-            return;
-        }
-        
-        testimonialsContainer.innerHTML = feedbacks.map((feedback, index) => `
-            <div class="testimonial-card" data-aos="fade-up" data-aos-delay="${(index % 3) * 100}">
-                <p class="testimonial-text">"${escapeHtml(feedback.message)}"</p>
-                <div class="testimonial-author">
-                    <div>
-                        <h4>${escapeHtml(feedback.name)}</h4>
-                        <p class="text-primary">⭐ ${'★'.repeat(feedback.rating || 0)}${'☆'.repeat(5 - (feedback.rating || 0))}</p>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-        
-        AOS.refresh();
-    } catch (error) {
-        console.error('Error loading testimonials:', error);
-        testimonialsContainer.innerHTML = '<p class="text-center">Unable to load testimonials.</p>';
-    }
-}
 
 // Helper function to escape HTML
 function escapeHtml(str) {
@@ -540,9 +465,8 @@ class FormHandler {
         
         if (!this.validateForm(data)) return;
         
-        // Send to backend
         try {
-            const response = await fetch('/api/volunteer', {
+            const response = await fetch(`${window.API_BASE_URL}/api/volunteer`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -554,7 +478,6 @@ class FormHandler {
                 this.showError('Submission failed. Please try again.');
             }
         } catch (err) {
-            // Fallback to localStorage if backend not available
             this.saveToLocalStorage('volunteers', data);
             this.showSuccess('Application submitted successfully! We\'ll contact you soon.');
             e.target.reset();
@@ -570,7 +493,7 @@ class FormHandler {
         if (!this.validateForm(data)) return;
         
         try {
-            const response = await fetch('/api/contact', {
+            const response = await fetch(`${window.API_BASE_URL}/api/contact`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
@@ -679,7 +602,6 @@ class FormHandler {
             if (e.target === modal) modal.remove();
         });
     }
-    
 }
 
 // ===== MOBILE DETECTION & OPTIMIZATIONS =====
@@ -705,20 +627,6 @@ document.querySelectorAll('input, select, textarea').forEach(el => {
     el.addEventListener('focus', () => {
         if (isMobile()) {
             document.body.style.fontSize = '16px';
-        }
-    });
-});
-
-// Smooth scroll for mobile
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
         }
     });
 });
