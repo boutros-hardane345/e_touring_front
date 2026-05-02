@@ -813,7 +813,7 @@ footer::before {
 }
 
 .footer-section p a {
-    color: var(--white);
+    color: var(--primary);
     text-decoration: none;
     transition: var(--transition);
 }
