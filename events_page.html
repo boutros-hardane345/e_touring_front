@@ -72,10 +72,18 @@
                 const events = await res.json();
                 const grid = document.getElementById('eventsGrid');
                 if (events.length === 0) { grid.innerHTML = '<p class="text-center">No events available</p>'; return; }
+
+                function resolvePublicImageUrl(url) {
+                    if (!url) return '';
+                    if (/^https?:\/\//i.test(url)) return url;
+                    if (String(url).startsWith('/uploads/')) return `${window.API_BASE_URL}${url}`;
+                    return url;
+                }
+
                 grid.innerHTML = events.map(event => `
                     <div class="card" data-aos="fade-up">
                         ${event.badge ? `<span class="card-badge">${escapeHtml(event.badge)}</span>` : ''}
-                        <img src="${event.image || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470'}" class="card-img">
+                        <img src="${resolvePublicImageUrl(event.image) || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470'}" class="card-img">
                         <div class="card-content">
                             <h3>${escapeHtml(event.title)}</h3>
                             <p><i class="fas fa-calendar"></i> ${event.date || 'TBA'}</p>

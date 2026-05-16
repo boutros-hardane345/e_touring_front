@@ -159,7 +159,7 @@
                 }
                 eventsGrid.innerHTML = events.slice(0, 3).map((event, index) => `
                     <div class="card" data-aos="fade-up" data-aos-delay="${index * 100}">
-                        <img src="${event.image || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470'}" class="card-img" loading="lazy">
+                        <img src="${resolvePublicImageUrl(event.image) || 'https://images.unsplash.com/photo-1501785888041-af3ef285b470'}" class="card-img" loading="lazy">
                         <div class="card-content">
                             <h3 class="card-title">${escapeHtml(event.title)}</h3>
                             <p><i class="fas fa-calendar"></i> ${event.date || 'Date TBA'}</p>
@@ -173,6 +173,13 @@
             } catch (error) {
                 console.error('Error loading events:', error);
             }
+        }
+
+        function resolvePublicImageUrl(url) {
+            if (!url) return '';
+            if (/^https?:\/\//i.test(url)) return url;
+            if (String(url).startsWith('/uploads/')) return `${window.API_BASE_URL}${url}`;
+            return url;
         }
 
         async function loadTestimonials() {
